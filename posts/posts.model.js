@@ -29,7 +29,20 @@ function getPost(id) {
   });
 }
 
+function addNewPost(id, title, description) {
+  const newPost = {
+    id,
+    title,
+    description,
+    comments: [],
+  };
+
+  posts.push(newPost);
+  return newPost;
+}
+
 module.exports = {
   getAllPosts,
   getPost,
+  addNewPost,
 };

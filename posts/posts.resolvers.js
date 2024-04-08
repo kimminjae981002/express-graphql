@@ -9,4 +9,9 @@ module.exports = {
       return postsModel.getPost(args.id);
     },
   },
+  Mutation: {
+    addNewPost: (_, args) => {
+      return postsModel.addNewPost(args.id, args.title, args.description);
+    },
+  },
 };
