@@ -1,3 +1,4 @@
+const { loadFiles } = require("@graphql-tools/load-files");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
@@ -9,8 +10,13 @@ const PORT = 3000;
 // !를 붙이면 있어야된다.
 // description을 요청하면 root값이 나온다.
 
+const loadedFiles = loadFiles("**/*", {
+  extensions: ["graphql"],
+});
+// graphql이라는 파일을 모두 불러온다.
+
 const schema = makeExecutableSchema({
-  typeDefs: [schemaString],
+  typeDefs: loadedFiles,
 });
 
 const root = {
