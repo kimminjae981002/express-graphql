@@ -2,7 +2,7 @@ const { loadFiles, loadFilesSync } = require("@graphql-tools/load-files");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const path = require("path");
 const express = require("express");
-const { graphqlHTTP } = require("express-graphql");
+// const { graphqlHTTP } = require("express-graphql");
 // const { buildSchema } = require("graphql");
 
 const app = express();
@@ -32,7 +32,7 @@ const schema = makeExecutableSchema({
 // };
 // description을 요청하면 root값이 나온다.
 
-app.use("/graphql", graphqlHTTP({ schema }));
+// app.use("/graphql", graphqlHTTP({ schema })); // express-graphql
 // post /graphql을 요청하면 descrition에서 root가 나온다.
 
 app.listen(PORT, (req, res) => {
