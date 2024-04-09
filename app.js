@@ -1,8 +1,14 @@
 const { loadFiles, loadFilesSync } = require("@graphql-tools/load-files");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
-const { ApolloServer } = require("apollo-server-express");
+// const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require("@apollo/server");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
+const { expressMiddleware } = require("@apollo/server/express4");
+const {
+  ApolloServerPluginDrainHttpServer,
+} = require("@apollo/server/plugin/drainHttpServer");
 // const { graphqlHTTP } = require("express-graphql");
 // const { buildSchema } = require("graphql");
 
@@ -36,7 +42,14 @@ async function startApolloServer() {
   await server.start();
 
   // express와 연결
-  server.applyMiddleware({ app, path: "/graphql" });
+  app.use(
+    "/graphql",
+    cors(),
+    express.json(),
+    expressMiddleware(server, {
+      context: async ({ req }) => ({ token: req.headers.token }),
+    })
+  );
 
   app.listen(PORT, (req, res) => {
     console.log(`server open ${PORT}`);
